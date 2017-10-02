@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Import" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Gallery" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Slideshow" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Tools" />
+    </group>
+
+    <item android:title="@string/action_settings">
+        <menu>
+            <item
+                android:id="@+id/logout"
+                android:icon="@android:drawable/ic_lock_idle_lock"
+                android:title="@string/action_logout" />
+            <item
+                android:id="@+id/close_application"
+                android:icon="@android:drawable/ic_menu_revert"
+                android:title="@string/action_exit" />
+        </menu>
+    </item>
+
+</menu>

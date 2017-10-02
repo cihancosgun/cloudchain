@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">CloudChain</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_exit">Exit</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="titlie_activity_register">Register</string>
+    <string name="action_register">Register</string>
+    <string name="prompt_password_confirm">Password confirm</string>
+    <string name="error_email_exists">This email is being used by another user</string>
+    <string name="info_registration_complete">Registration is complete</string>
+    <string name="error_invalid_email_or_password">Invalid email or password</string>
+    <string name="error_registration">Registration is fail</string>
+    <string name="info_login_succesful">Login succesful</string>
+    <string name="error_email_not_exists">E-Mail is not exists</string>
+    <string name="folders">Folders</string>
+    <string name="files">Files</string>
+    <string name="info_filewritepermission_granted">File write permision is granted</string>
+    <string name="error_filepermission_denied">File write permision is denied</string>
+    <string name="info_download">File is downloaded</string>
+    <string name="error_file_download">File download error</string>
+    <string name="error_file_upload">File upload is failed</string>
+    <string name="info_upload">File upload succesfull</string>
+    <string name="error_select_parent_dir">Select parent directory</string>
+    <string name="action_create_folder">Create Folder</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="prompt_folder_name">Folder Name</string>
+    <string name="info_createfolder_success">New folder created</string>
+    <string name="error_createfolder">Folder create is fail</string>
+    <string name="action_rename">Rename</string>
+    <string name="action_delete">Delete</string>
+    <string name="info_select_action">Select Action</string>
+    <string name="info_folder_name">Folder Name</string>
+    <string name="info_file_name">File Name</string>
+    <string name="confirm_delete_folder">Are you sure, delete folder ?</string>
+    <string name="confirm_delete_file">Are you sure, delete file ?</string>
+    <string name="confirm">Confirm</string>
+    <string name="prompt_name">Enter Name</string>
+</resources>
