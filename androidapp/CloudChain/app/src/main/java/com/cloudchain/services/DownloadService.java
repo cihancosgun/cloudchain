@@ -29,7 +29,7 @@ import java.net.URL;
  */
 
 public class DownloadService extends AsyncTask<String, Integer, String> {
-    private final String fileServerURL = "http://192.168.134.85:3000/download?file=";
+    private final String fileServerURL = "http://192.168.134.85:3500/download?file=";
     private Context context;
     private PowerManager.WakeLock mWakeLock;
     private ProgressDialog progressDialog;

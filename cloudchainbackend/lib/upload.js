@@ -7,6 +7,7 @@ var MongoClient = require("mongodb").MongoClient,
     upload = module.parent.exports.upload,
     express = module.parent.exports.express,
     fs = module.parent.exports.fs,
+    io = module.parent.exports.io,
     util = require("./util").util;
 
 debug("upload.js is loaded");
@@ -73,7 +74,8 @@ server.post('/upload', upload.single('file'), function (req, res) {
             rec.nodeid = parseInt(req.body.nodeid);
             console.log(rec);
             insertRecord("files",rec,function(result){
-                if(result){                    
+                if(result){
+                  io.to(rec.mail).emit('updatefiles','updatefiles');
                     res.json(200, { "ok": true, path: path });
                 }else{
                     fs.unlinkSync(path);

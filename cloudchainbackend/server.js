@@ -60,9 +60,9 @@ var http = module.exports.http  = require('http').Server(app);
 var router = module.exports.server = express.Router(); 
 app.use('/', router);
 
-
-
 var upload = module.exports.upload = multer({ dest: config.upload });
+
+var io = module.exports.io = require('socket.io')(http);
 
 require('./lib/rest');
 require('./lib/upload');

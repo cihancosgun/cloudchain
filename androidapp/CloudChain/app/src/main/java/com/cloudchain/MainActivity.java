@@ -58,12 +58,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     final int fileWriteRequestCode = 1453;
     final int FILE_CODE = 1071;
-    private final String fileServerURL = "http://192.168.134.85:3000/upload";
+    private final String serverURL = "http://192.168.134.85:3500";
+    private final String fileServerURL = "http://192.168.134.85:3500/upload";
     DBManager dbManager;
     List<JSONObject> listOfNodes;
     List<JSONObject> listOfFiles;
@@ -104,6 +109,8 @@ public class MainActivity extends AppCompatActivity
         dbManager = new DBManager(this);
         try {
             listNode();
+
+            setScoket();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -589,6 +596,56 @@ public class MainActivity extends AppCompatActivity
                 }
             } catch (JSONException ex) {
             }
+        }
+    }
+
+    void setScoket() {
+        try {
+            final Socket socket = IO.socket(serverURL);
+            DBManager dbManager = new DBManager(MainActivity.this);
+            final String email = dbManager.getLoggedUser().getString("email");
+            socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    socket.emit("joinroom", email);
+                }
+            }).on("updatefiles", new Emitter.Listener() {
+
+                @Override
+                public void call(Object... args) {
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MainActivity.this.setActiveNode(parentNodeID);
+                        }
+                    });
+                }
+
+            }).on("nodeupdate", new Emitter.Listener() {
+
+                @Override
+                public void call(Object... args) {
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                MainActivity.this.listNode();
+                            } catch (Exception ex) {
+                            }
+                        }
+                    });
+                }
+
+            }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+
+                @Override
+                public void call(Object... args) {
+                }
+
+            });
+            socket.connect();
+        } catch (Exception ex) {
+
         }
     }
 

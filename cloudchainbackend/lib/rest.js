@@ -15,6 +15,7 @@ var MongoClient = require("mongodb").MongoClient,
   express = module.parent.exports.express,
   http = module.parent.exports.http,
   fs = module.parent.exports.fs,
+  io = module.parent.exports.io,
   util = require("./util").util;
 
 debug("rest.js is loaded");
@@ -26,8 +27,6 @@ server.get('/', function(req, res){
   res.json(200, {"msg":"hello world"});
 });
 
-var io = require('socket.io')(http);
-
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('disconnect', function(){
@@ -38,6 +37,14 @@ io.on('connection', function(socket){
     console.log('message: ' + msg);
     io.emit('chat message', msg);
   });
+
+  socket.on('joinroom', function(newroom){
+		if(socket.room != undefined){
+      socket.leave(socket.room);
+    }    
+    socket.join(newroom);		
+    debug("a user join this room : ".concat(newroom));
+	});
 });
    
 
@@ -294,6 +301,7 @@ server.post('/cloudchain/setnodes',function(req,res){
       }else{
         var query = {"email":user.email};
         updateRecordIncludeSet("nodes",query, {"nodes":params.nodes} , function(result){
+          io.to(params.email).emit('nodeupdate',"nodeupdate");
           res.json(200,{ "ok":result });
         });
       }
@@ -315,7 +323,6 @@ server.post('/cloudchain/deletenodefiles',function(req,res){
         query = {"mail":user.email, "nodeid":parseInt(params.nodeid)};
         findAllRecords("files",query,{},{},function(results){
           if(results!= null){
-            debug(JSON.stringify(results));
             for(var i=0; i<results.length;i++){
               var file = results[i];
               try{
@@ -324,8 +331,7 @@ server.post('/cloudchain/deletenodefiles',function(req,res){
             }            
           }                    
           debug(JSON.stringify(query));
-          deleteAllRecords("files",query,function(result){
-            debug(JSON.stringify( result));
+          deleteAllRecords("files",query,function(result){            
             res.json(200,{"ok":true});
           });
         });
@@ -347,11 +353,10 @@ server.post('/cloudchain/deletefile',function(req,res){
       }else{
         query = {"mail":user.email, "_id": new ObjectID(params.file_id)};
         findOneRecord("files",query,function(result){
-          if(result!=null){
-              debug(result);
-              debug(JSON.stringify(result));
+          if(result!=null){              
               fs.unlinkSync(result.uploadfilepath);
               deleteAllRecords("files",query, function(result){
+                io.to(params.email).emit('updatefiles',"updatefiles");
                 res.json(200,{"ok":result});
               });
             }else{
@@ -379,6 +384,7 @@ server.post('/cloudchain/renamefile',function(req,res){
         findOneRecord("files",query,function(result){
           if(result!=null){           
             updateRecordIncludeSet("files", query, rec, function(result){
+              io.to(params.email).emit('updatefiles','updatefiles');
               res.json(200,{"ok":result});
             });
           }else{

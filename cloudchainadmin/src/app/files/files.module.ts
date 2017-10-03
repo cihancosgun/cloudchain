@@ -11,8 +11,12 @@ import { TranslateModule } from "@ngx-translate/core";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+const config: SocketIoConfig = { url: 'http://192.168.134.85:3500', options: {} };
+
 
 @NgModule({
   imports: [
@@ -28,7 +32,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProgressbarModule.forRoot(), 
     PaginationModule.forRoot(),   
     ModalModule.forRoot(),
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    SocketIoModule.forRoot(config)
   ],
   declarations: [FilesComponent]
 })

@@ -10,9 +10,12 @@ import { TreeComponent, TreeNode } from 'angular-tree-component';
 import { BackendService } from '../shared/services/backendService'
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule, HttpRequest, HttpEventType, HttpResponse, HttpHeaders } from "@angular/common/http";
+import { SocketService } from '../shared/services/socketService';
+
 
 @Component({
-  templateUrl: 'files.component.html'
+  templateUrl: 'files.component.html',
+  providers : [SocketService]
 })
 export class FilesComponent implements OnInit {
   public modalRef: BsModalRef;
@@ -44,7 +47,7 @@ export class FilesComponent implements OnInit {
 
   constructor(private modalService: BsModalService,
     private backendService: BackendService,
-    private translateService: TranslateService, private renderer: Renderer) { }
+    private translateService: TranslateService, private renderer: Renderer, private socketService : SocketService) { }
 
   public addFolder(modal: TemplateRef<any>, parentNode: any) {
     this.folderName = "";
@@ -235,11 +238,36 @@ export class FilesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let loggedUser: any = JSON.parse(sessionStorage.getItem("loggedUser"));
     this.backendService.getUserNode().then((val) => {
       this.nodes = val;
     });
     window.addEventListener("contextmenu", (e) => {
       e.preventDefault();
+    });
+
+    this.socketService.sendMessage("joinroom",loggedUser.email);
+    this.socketService
+    .getMessage("updatefiles")
+    .subscribe(msg => {
+      setTimeout(() => {      
+        this.backendService.getUserFilesCount(this.treeComponent.treeModel.getFocusedNode().id).then((count) => {
+          this.bigTotalItems = (<any>count).count;
+          this.bigCurrentPage = 1;
+          this.backendService.getUserFiles(this.treeComponent.treeModel.getFocusedNode().id, 0, this.maxSize).then((val) => {
+            this.userFiles = <any[]>val;
+          });
+        });
+
+      }, 1000);
+    });
+
+    this.socketService
+    .getMessage("nodeupdate")
+    .subscribe(msg => {
+      this.backendService.getUserNode().then((val) => {
+        this.nodes = val;
+      });
     });
   }
 

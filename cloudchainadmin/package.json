@@ -25,6 +25,7 @@
     "@ngx-translate/http-loader": "^1.0.2",
     "angular-tree-component": "^4.1.0",
     "core-js": "^2.4.1",
+    "ng-socket-io": "^0.1.11",
     "ng2-charts": "^1.6.0",
     "ng2-file-tree": "^0.4.3",
     "ng2-validation-manager": "^0.3.4",
