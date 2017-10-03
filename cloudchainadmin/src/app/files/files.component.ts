@@ -230,7 +230,6 @@ export class FilesComponent implements OnInit {
   openContextMenu(event) {
     event.preventDefault();
     if (event.button > 0) {
-      //console.log(event);
       this.popUpMenuFolder.nativeElement.style.visibility = 'visible';
       this.popUpMenuFolder.nativeElement.style.top = event.screenY;
       this.popUpMenuFolder.nativeElement.style.left = event.screenX;
