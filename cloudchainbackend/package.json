@@ -1,0 +1,52 @@
+{
+  "name": "cloudchainbackend",
+  "description": "",
+  "version": "1.0.0",
+  "author": "cloudchain",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "keywords": [
+    "mongodb",
+    "mongo",
+    "db",
+    "rest",
+    "restful",
+    "api"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "http": "0.0.0",
+    "mongodb": "^2.2.30",
+    "multer": "^1.3.0",
+    "restify": "^4.1.1",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "supertest": "0.5.x",
+    "mocha": "1.8.x"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "mocha -R spec",
+    "start": "node server.js"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "server": "./bin/server"
+  },
+  "homepage": ""
+}

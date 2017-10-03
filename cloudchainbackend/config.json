@@ -1,0 +1,20 @@
+{
+  "db": {
+    "db":"cloudchaindb",
+    "port": 27017,
+    "host": "localhost",
+    "username": "",
+    "password": ""
+  },
+  "server": {
+    "port": 3500,
+    "address": "0.0.0.0"
+  },
+  "flavor": "mongodb",
+  "debug": true,
+  "upload": "uploads/",
+  "uploadserver": {
+    "port": 3000,
+    "address": "0.0.0.0"
+  }
+}

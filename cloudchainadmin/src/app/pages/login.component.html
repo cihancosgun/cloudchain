@@ -1,0 +1,49 @@
+<div class="app flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-group mb-0">
+          <div class="card p-4">
+            <div class="card-block">
+              <h1>{{'login' | translate}}</h1>
+              <p class="text-muted">{{'Sign In to your account' | translate}}</p>
+              <div class="input-group mb-3">
+                <span class="input-group-addon">@</span>
+                <input type="email" class="form-control" placeholder="{{'Email' | translate}}" [(ngModel)]="user.email">
+              </div>
+              <div class="input-group mb-4">
+                <span class="input-group-addon"><i class="icon-lock"></i></span>
+                <input type="password" class="form-control" placeholder="{{'Password' | translate}}" [(ngModel)]="user.password">
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <alert *ngIf="!isLoggedin" type="danger">
+                    <strong>{{'Error' | translate}}</strong> {{'Username or password is wrong, please try again.' | translate}}
+                  </alert>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <button type="button" class="btn btn-primary px-4" (click)="login()">{{'login' | translate}}</button>
+                </div>
+                <div class="col-6 text-right">
+                  <button type="button" class="btn btn-link px-0">{{'Forgot password?' | translate}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-inverse card-primary py-5 d-md-down-none" style="width:44%">
+            <div class="card-block text-center">
+              <div>
+                <h2>{{'Sign up' | translate}}</h2>
+                <p>{{'Sign up description' | translate}}</p>
+                <button type="button" class="btn btn-primary active mt-3" (click)="register()">{{'Sign up' | translate}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

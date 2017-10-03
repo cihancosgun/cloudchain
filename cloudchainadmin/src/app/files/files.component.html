@@ -1,0 +1,127 @@
+<div class="row">
+
+  <div class="col-lg-2">
+    <div class="card card-outline-primary" style="min-height: 600px;">
+      <div class="card-header">
+        <i class="fa fa-align-justify"></i> {{'Directory' | translate}}
+      </div>
+      <div class="card-block">
+        <tree-root [nodes]="nodes" #tree (activate)="onNodeActivate($event)">
+          <ng-template #treeNodeTemplate let-node let-index="index">
+            <!-- <button (click)="addFolder(folderModal, node)" class="fa fa-plus"></button>
+            <button *ngIf="node.data.name !='/'" (click)="editFolder(folderModal,node)" class="fa fa-edit"></button>
+            <button *ngIf="node.data.name !='/'" (click)="removeFolder(node)" class="fa fa-close"></button>
+            <br> -->
+            <i (mousedown)="openContextMenu($event)" class="fa fa-folder fa-lg mt-4" *ngIf="node.data.type == 'folder'"></i>
+            <i (mousedown)="openContextMenu($event)" class="fa fa-file fa-lg mt-4" *ngIf="node.data.type != 'folder'"></i>
+            <span (mousedown)="openContextMenu($event)"> {{ node.data.name }} </span>
+          </ng-template>
+        </tree-root>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <div class="card card-outline-primary" style="min-height: 600px;">
+      <div class="card-header">
+        <i class="fa fa-align-justify"></i> {{'Files' | translate}}
+      </div>
+      <div class="card-block">
+        <table class="table table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>{{'File Name' | translate}}</th>
+              <th>{{'File Type' | translate}}</th>
+              <th>{{'File Size' | translate}}</th>
+              <th>{{'File Date' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of userFiles">
+              <td>
+                <a href="#" (click)="download(row)">{{row.name}}</a>
+              </td>
+              <td>{{row.type}}</td>
+              <td>{{row.size}}</td>
+              <td>{{row.lastModifiedDate}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage" [maxSize]="maxSize" class="pagination-sm" [boundaryLinks]="true"
+          (pageChanged)="pageChanged($event)" firstText="{{'First' | translate}}" previousText="{{'Previous' | translate}}"
+          lastText="{{'Last' | translate}}" nextText="{{'Next' | translate}}">
+        </pagination>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-2">
+    <div class="card card-outline-primary" style="min-height: 600px;">
+      <div class="card-header">
+        <i class="fa fa-align-justify"></i> {{'File Upload' | translate}}
+      </div>
+      <div class="card-block">
+        <div id="drop_zone" class="droparea" (drop)="dropFiles($event)" (dragover)="allowDrop($event)">
+          <strong>{{'Drag one or more files to this Drop Zone Or Click And Select File' | translate}} </strong>
+          <input type="file" class="upload" (change)="onFileSelect($event)" multiple/>
+          <!-- <div class="fileUpload btn btn-primary">
+            <i class="fa fa-files-o"></i>&nbsp; {{'Select File or' | translate}}
+            <input type="file" class="upload" (change)="onFileSelect($event)" multiple/>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--/.row-->
+
+
+
+<template #folderModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'New Folder' | translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="folderName">{{'Folder Name' | translate}}</label>
+      <input type="text" class="form-control" id="folderName" name="folderName" maxlength="10" placeholder="{{'Enter folder name' | translate}}"
+        [(ngModel)]="folderName">
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveFolder()">{{'Save' | translate}}</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()">{{'Close' | translate}}</button>
+  </div>
+</template>
+
+
+<template #fileUploadModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'File Uploading' | translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <div class="progress">
+        <progressbar [max]="100" [value]="fileUploadPercent">
+          <span style="color:white; white-space:nowrap;">{{fileUploadPercent}} %</span>
+        </progressbar>
+      </div>
+      <span>{{fileUploadFileName}} {{'is uploading' | translate}} </span>
+    </div>
+  </div>
+</template>
+
+
+<div class="popUpMenuFolder" #popUpMenuFolder>
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <button type="button" class="btn btn-primary">Sony</button>
+</div>
